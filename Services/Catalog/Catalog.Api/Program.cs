@@ -14,7 +14,17 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseAuthentication().UseRouting().UseStaticFiles().UseEndpoints(endpoints=> {
+    endpoints.MapControllers();//,
+    //endpoints.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions{
+    //    Predicate= _ = true,
+    //    ResponseWriter = UIR
+    //}
+});
+
 
 app.UseHttpsRedirection();
 
