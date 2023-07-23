@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Catalog.Application.Mappers;
+﻿using Catalog.Application.Mappers;
 using Catalog.Application.Queries;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
@@ -8,7 +7,7 @@ using MediatR;
 
 namespace Catalog.Application.Handlers;
 
-public class GetAllBrandsHandler:IRequestHandler<GetAllBrandsQuery, IList<BrandsResponse>>
+public class GetAllBrandsHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandsResponse>>
 {
     private readonly IProductBrandRepository _brandRepository;
 
