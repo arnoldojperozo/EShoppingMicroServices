@@ -2,7 +2,7 @@
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 
-namespace Catalog.Application.Models;
+namespace Catalog.Application.Mappers;
 
 public class ProductMappingProfile : Profile
 {
