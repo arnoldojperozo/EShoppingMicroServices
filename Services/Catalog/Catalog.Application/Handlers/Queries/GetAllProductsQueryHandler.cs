@@ -4,9 +4,9 @@ using Catalog.Application.Responses;
 using Catalog.Core.Repository.Interfaces;
 using MediatR;
 
-namespace Catalog.Application.Handlers;
+namespace Catalog.Application.Handlers.Queries;
 
-public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, IList<ProductsResponse>>
+public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, IList<ProductResponse>>
 {
     private readonly IProductRepository _productRepository;
 
@@ -15,11 +15,11 @@ public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, I
         _productRepository = productRepository;
     }
     
-    public async Task<IList<ProductsResponse>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+    public async Task<IList<ProductResponse>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
         var productList = await _productRepository.GetProducts();
 
-        var productResponse = ProductMapper.Mapper.Map<IList<ProductsResponse>>(productList);
+        var productResponse = ProductMapper.Mapper.Map<IList<ProductResponse>>(productList);
 
         return productResponse;
     }

@@ -4,9 +4,9 @@ using Catalog.Application.Responses;
 using Catalog.Core.Repository.Interfaces;
 using MediatR;
 
-namespace Catalog.Application.Handlers;
+namespace Catalog.Application.Handlers.Queries;
 
-public class GetAllTypesQueryHandler : IRequestHandler<GetAllTypesQuery, IList<TypesResponse>>
+public class GetAllTypesQueryHandler : IRequestHandler<GetAllTypesQuery, IList<TypeResponse>>
 {
     private readonly IProductTypeRepository _typesRepository;
 
@@ -15,11 +15,11 @@ public class GetAllTypesQueryHandler : IRequestHandler<GetAllTypesQuery, IList<T
         _typesRepository = typesRepository;
     }
     
-    public async Task<IList<TypesResponse>> Handle(GetAllTypesQuery request, CancellationToken cancellationToken)
+    public async Task<IList<TypeResponse>> Handle(GetAllTypesQuery request, CancellationToken cancellationToken)
     {
         var typesList = await _typesRepository.GetAllProductTypes();
 
-        var typesResponseList = ProductMapper.Mapper.Map<IList<TypesResponse>>(typesList);
+        var typesResponseList = ProductMapper.Mapper.Map<IList<TypeResponse>>(typesList);
 
         return typesResponseList;
     }

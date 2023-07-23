@@ -5,9 +5,9 @@ using Catalog.Core.Entities;
 using Catalog.Core.Repository.Interfaces;
 using MediatR;
 
-namespace Catalog.Application.Handlers;
+namespace Catalog.Application.Handlers.Queries;
 
-public class GetAllBrandsQueryHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandsResponse>>
+public class GetAllBrandsQueryHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandResponse>>
 {
     private readonly IProductBrandRepository _brandRepository;
 
@@ -16,12 +16,12 @@ public class GetAllBrandsQueryHandler : IRequestHandler<GetAllBrandsQuery, IList
         _brandRepository = brandRepository;
     }
 
-    public async Task<IList<BrandsResponse>> Handle(GetAllBrandsQuery request, CancellationToken cancellationToken)
+    public async Task<IList<BrandResponse>> Handle(GetAllBrandsQuery request, CancellationToken cancellationToken)
     {
         var brandList = await _brandRepository.GetAllProductBrands();
 
         var brandResponseList =
-            ProductMapper.Mapper.Map<IList<ProductBrand>, IList<BrandsResponse>>(brandList.ToList());
+            ProductMapper.Mapper.Map<IList<ProductBrand>, IList<BrandResponse>>(brandList.ToList());
         return brandResponseList;
     }
 }

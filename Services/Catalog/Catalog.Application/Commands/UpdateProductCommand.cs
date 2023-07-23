@@ -1,10 +1,11 @@
 ﻿using Catalog.Core.Entities;
+using MediatR;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace Catalog.Application.Responses;
+namespace Catalog.Application.Commands;
 
-public class ProductsResponse
+public class UpdateProductCommand : IRequest<bool>
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
@@ -17,4 +18,5 @@ public class ProductsResponse
     public decimal Price { get; set; }
     public ProductBrand Brands { get; set; }
     public ProductType Types { get; set; }
+
 }
