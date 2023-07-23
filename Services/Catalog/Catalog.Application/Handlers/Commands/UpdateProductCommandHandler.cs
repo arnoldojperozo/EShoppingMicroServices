@@ -3,7 +3,7 @@ using Catalog.Core.Entities;
 using Catalog.Infrastructure.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Handlers;
+namespace Catalog.Application.Handlers.Commands;
 
 public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, bool>
 {

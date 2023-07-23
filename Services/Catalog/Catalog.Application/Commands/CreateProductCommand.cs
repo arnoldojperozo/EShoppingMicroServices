@@ -1,16 +1,11 @@
-﻿using Catalog.Core.Entities;
+﻿using Catalog.Application.Responses;
+using Catalog.Core.Entities;
 using MediatR;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
-namespace Catalog.Application.Responses;
+namespace Catalog.Application.Commands;
 
-public class ProductResponse : IRequest
+public class CreateProductCommand : IRequest<ProductResponse>
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
-    [BsonElement("Name")]
     public string Name { get; set; }
     public string Summary { get; set; }
     public string Description { get; set; }
