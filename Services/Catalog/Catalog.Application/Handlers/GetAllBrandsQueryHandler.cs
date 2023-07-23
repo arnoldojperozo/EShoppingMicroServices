@@ -7,11 +7,11 @@ using MediatR;
 
 namespace Catalog.Application.Handlers;
 
-public class GetAllBrandsHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandsResponse>>
+public class GetAllBrandsQueryHandler : IRequestHandler<GetAllBrandsQuery, IList<BrandsResponse>>
 {
     private readonly IProductBrandRepository _brandRepository;
 
-    public GetAllBrandsHandler(IProductBrandRepository brandRepository)
+    public GetAllBrandsQueryHandler(IProductBrandRepository brandRepository)
     {
         _brandRepository = brandRepository;
     }
