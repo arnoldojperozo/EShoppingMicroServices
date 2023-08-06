@@ -4,8 +4,6 @@ namespace Catalog.Core.Repository.Interfaces;
 
 public interface IProductRepository
 {
-
-
     Task<Product> GetProduct(string id);
     Task<IEnumerable<Product>> GetProducts();
     Task<IEnumerable<Product>> GetProductByName(string name);

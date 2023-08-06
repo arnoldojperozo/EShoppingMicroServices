@@ -132,13 +132,11 @@ public class CatalogController : ApiController
     [ProducesResponseType(typeof(ProductResponse),(int)HttpStatusCode.OK)]
     public async Task<IActionResult> DeleteProduct(string id)
     {
-        var productCommand = new DeleteProductByIdQuery(id);
+        var productCommand = new DeleteProductByIdCommand(id);
         
         var result = await _mediator.Send(productCommand);
 
         return Ok(result);
     }
     #endregion
-
-
 }

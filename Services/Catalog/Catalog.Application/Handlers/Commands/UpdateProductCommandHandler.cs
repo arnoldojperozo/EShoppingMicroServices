@@ -1,5 +1,6 @@
 ﻿using Catalog.Application.Commands;
 using Catalog.Core.Entities;
+using Catalog.Core.Repository.Interfaces;
 using Catalog.Infrastructure.Repositories;
 using MediatR;
 
@@ -7,9 +8,9 @@ namespace Catalog.Application.Handlers.Commands;
 
 public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, bool>
 {
-    private readonly ProductRepository _productRepository;
+    private readonly IProductRepository _productRepository;
 
-    public UpdateProductCommandHandler(ProductRepository productRepository)
+    public UpdateProductCommandHandler(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }

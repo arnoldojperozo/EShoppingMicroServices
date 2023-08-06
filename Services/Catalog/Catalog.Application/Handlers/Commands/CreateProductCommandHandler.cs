@@ -2,6 +2,7 @@
 using Catalog.Application.Mappers;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
+using Catalog.Core.Repository.Interfaces;
 using Catalog.Infrastructure.Repositories;
 using MediatR;
 
@@ -9,9 +10,9 @@ namespace Catalog.Application.Handlers.Commands;
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductResponse>
 {
-    private readonly ProductRepository _productRepository;
+    private readonly IProductRepository _productRepository;
 
-    public CreateProductCommandHandler(ProductRepository productRepository)
+    public CreateProductCommandHandler(IProductRepository productRepository)
     {
         _productRepository = productRepository;
     }
