@@ -1,5 +1,4 @@
 using System.Reflection;
-using Catalog.Application.Commands;
 using Catalog.Application.Handlers.Commands;
 using Catalog.Core.Repository.Interfaces;
 using Catalog.Infrastructure.Data;

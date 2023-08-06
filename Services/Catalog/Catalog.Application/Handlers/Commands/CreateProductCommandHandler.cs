@@ -3,7 +3,6 @@ using Catalog.Application.Mappers;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Catalog.Core.Repository.Interfaces;
-using Catalog.Infrastructure.Repositories;
 using MediatR;
 
 namespace Catalog.Application.Handlers.Commands;

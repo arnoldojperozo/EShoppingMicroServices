@@ -9,7 +9,7 @@ public static class ProductContext
     public static void SeedData(IMongoCollection<Product> productCollection)
     {
         bool products = productCollection.Find(b => true).Any();
-        string path = Path.Combine("Data", "SeedData", "brands.json");
+        string path = Path.Combine("Data", "SeedData", "products.json");
 
         if (!products)
         {

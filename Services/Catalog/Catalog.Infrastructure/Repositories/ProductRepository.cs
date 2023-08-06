@@ -1,6 +1,8 @@
 ﻿using Catalog.Core.Entities;
 using Catalog.Core.Repository.Interfaces;
+using Catalog.Core.Specs;
 using Catalog.Infrastructure.Data.Interfaces;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
@@ -18,9 +20,56 @@ public class ProductRepository : IProductRepository, IProductBrandRepository, IP
         return await _context.Products.Find(p => p.Id == id).SingleOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetProducts()
+    public async Task<Pagination<Product>> GetProducts(CatalogSpecParams catalogSpecParams)
     {
-        return await _context.Products.Find(p => true).ToListAsync();
+        var builder = Builders<Product>.Filter;
+
+        var filter = builder.Empty;
+
+        if (!string.IsNullOrEmpty(catalogSpecParams.Search))
+        {
+            var searchFilter = builder.Regex(x=>x.Name, new BsonRegularExpression(catalogSpecParams.Search));
+
+            filter &= searchFilter;
+        }
+        
+        if (!string.IsNullOrEmpty(catalogSpecParams.BrandId))
+        {
+            var brandFilter = builder.Eq(x=>x.Brands.Id, catalogSpecParams.BrandId);
+
+            filter &= brandFilter;
+        }
+        
+        if (!string.IsNullOrEmpty(catalogSpecParams.TypeId))
+        {
+            var typeFilter = builder.Eq(x=>x.Types.Id, catalogSpecParams.TypeId);
+
+            filter &= typeFilter;
+        }
+
+        if (!string.IsNullOrEmpty(catalogSpecParams.Sort))
+        {
+            return new Pagination<Product>
+            {
+                PageSize = catalogSpecParams.PageSize,
+                PageIndex = catalogSpecParams.PageIndex,
+                Data = await DataFilter(catalogSpecParams, filter),
+                Count = (int) await _context.Products.CountDocumentsAsync(p => true)
+            };
+        }
+
+        return new Pagination<Product>
+        {
+            PageSize = catalogSpecParams.PageSize,
+            PageIndex = catalogSpecParams.PageIndex,
+            Data = await _context.Products
+                .Find(filter)
+                .Sort(Builders<Product>.Sort.Ascending("Name"))
+                .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
+                .Limit(catalogSpecParams.PageSize)
+                .ToListAsync(),
+            Count = (int) await _context.Products.CountDocumentsAsync(p => true)
+        };
     }
 
     public async Task<IEnumerable<Product>> GetProductByName(string name)
@@ -76,4 +125,39 @@ public class ProductRepository : IProductRepository, IProductBrandRepository, IP
     {
         return await _context.ProductTypes.Find(p => true).ToListAsync();
     }
+    
+    #region Private Methods
+
+    private async Task<IReadOnlyList<Product>> DataFilter(CatalogSpecParams catalogSpecParams,
+        FilterDefinition<Product> filter)
+    {
+        switch(catalogSpecParams.Sort)
+        {
+            case "priceAsc":
+                return await _context
+                    .Products
+                    .Find(filter)
+                    .Sort(Builders<Product>.Sort.Ascending("Price"))
+                    .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
+                    .Limit(catalogSpecParams.PageSize)
+                    .ToListAsync();
+            case "priceDesc":
+                return await _context
+                    .Products
+                    .Find(filter)
+                    .Sort(Builders<Product>.Sort.Descending("Price"))
+                    .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
+                    .Limit(catalogSpecParams.PageSize)
+                    .ToListAsync();
+            default:
+                return await _context
+                    .Products
+                    .Find(filter)
+                    .Sort(Builders<Product>.Sort.Ascending("Name"))
+                    .Skip(catalogSpecParams.PageSize * (catalogSpecParams.PageIndex - 1))
+                    .Limit(catalogSpecParams.PageSize)
+                    .ToListAsync();
+        }
+    }
+    #endregion
 }
