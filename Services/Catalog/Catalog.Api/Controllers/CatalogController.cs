@@ -118,7 +118,7 @@ public class CatalogController : ApiController
     #region PUT Methods
     [HttpPut]
     [Route("UpdateProduct")]
-    [ProducesResponseType(typeof(ProductResponse),(int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(bool),(int)HttpStatusCode.OK)]
     public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductCommand productCommand)
     {
         var result = await _mediator.Send(productCommand);
@@ -130,7 +130,7 @@ public class CatalogController : ApiController
     #region DELETE Methods
     [HttpDelete]
     [Route("{id}",Name="DeleteProduct")]
-    [ProducesResponseType(typeof(ProductResponse),(int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(bool),(int)HttpStatusCode.OK)]
     public async Task<IActionResult> DeleteProduct(string id)
     {
         var productCommand = new DeleteProductByIdCommand(id);
