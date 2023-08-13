@@ -1,6 +1,6 @@
 ﻿using Basket.Application.Responses;
 
-namespace Basket.Application.Responses
+namespace Basket.Application.Responses;
 
 public class ShoppingCartResponse
 {

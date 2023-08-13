@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using Basket.Application.Responses;
+using MediatR;
 
-namespace Basket.Application.Queries
+namespace Basket.Application.Queries;
 
 public class GetBasketByUserNameQuery : IRequest<ShoppingCartResponse>
 {

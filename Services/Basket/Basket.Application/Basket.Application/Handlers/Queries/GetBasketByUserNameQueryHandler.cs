@@ -1,4 +1,6 @@
 ﻿using Basket.Application.Mappers;
+using Basket.Application.Queries;
+using Basket.Application.Responses;
 using Basket.Core.Repositories.Interfaces;
 using MediatR;
 
