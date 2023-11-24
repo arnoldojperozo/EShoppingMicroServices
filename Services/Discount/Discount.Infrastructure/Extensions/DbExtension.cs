@@ -21,7 +21,13 @@ public static class DbExtension
                 ApplyMigration(config);
                 logger.LogInformation("DB Migration Completed");
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
         }
+        return host;
     }
 
     private static void ApplyMigration(IConfiguration config)
