@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Discount.Application.Commands;
+using Discount.Core.Entities;
 using Discount.Core.Repositories;
 using Discount.Grpc.Protos;
 using MediatR;
