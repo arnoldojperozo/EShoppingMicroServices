@@ -38,7 +38,7 @@ public static class DbExtension
 
         using var cmd = new NpgsqlCommand{ Connection = connection };
 
-        cmd.CommandText = "DROP TABLE IF EXIST Coupon";
+        cmd.CommandText = "DROP TABLE IF EXISTS Coupon";
         cmd.ExecuteNonQuery();
         cmd.CommandText = @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY,
             ProductName VARCHAR(500) NOT NULL,
