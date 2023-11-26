@@ -57,7 +57,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount.Application", "Dis
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount.Infrastructure", "Discount.Infrastructure", "{05FC138C-2F87-4254-8ED7-28C091B3430E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Application", "Services\Discount\Discount.Application\Discount.Application\Discount.Application.csproj", "{641E1B72-BC70-404A-AAE0-8C04217AFD44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Application", "Services\Discount\Discount.Application\Discount.Application.csproj", "{641E1B72-BC70-404A-AAE0-8C04217AFD44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Infrastructure", "Services\Discount\Discount.Infrastructure\Discount.Infrastructure.csproj", "{C957186B-037D-4C28-B2F3-5D59CFC17130}"
 EndProject

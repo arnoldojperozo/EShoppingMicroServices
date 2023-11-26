@@ -1,7 +1,9 @@
 using System.Reflection;
+using Basket.Application.GrpcService;
 using Basket.Application.Handlers.Commands;
 using Basket.Core.Repositories.Interfaces;
 using Basket.Infrastructure.Repositories;
+using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -25,6 +27,8 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<DiscountGrpcService>();
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o=> o.Address=new Uri(ConfigurationBinder["GrpcSettings:DiscountUrl"]);
 builder.Services.AddHealthChecks().AddRedis(builder.Configuration["CacheSettings:ConnectionString"], "Redis Health",
     HealthStatus.Degraded);
 
