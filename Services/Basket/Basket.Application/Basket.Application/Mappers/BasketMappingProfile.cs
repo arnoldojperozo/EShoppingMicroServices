@@ -8,6 +8,7 @@ public class BasketMappingProfile : Profile
 {
     public BasketMappingProfile()
     {
+        CreateMap<ShoppingCart, ShoppingCartResponse>().ReverseMap();
         CreateMap<ShoppingCart, ShoppingCartItem>().ReverseMap();
         CreateMap<ShoppingCartItem, ShoppingCartItemResponse>().ReverseMap();
     }
