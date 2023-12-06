@@ -11,7 +11,7 @@ COPY ["Services/Catalog/Catalog.Api/Catalog.Api.csproj", "Services/Catalog/Catal
 COPY ["Services/Catalog/Catalog.Core/Catalog.Core.csproj", "Services/Catalog/Catalog.Core/"]
 COPY ["Services/Catalog/Catalog.Application/Catalog.Application.csproj", "Services/Catalog/Catalog.Application/"]
 COPY ["Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj", "Services/Catalog/Catalog.Infrastructure/"]
-#COPY ["Services/Catalog/Catalog.Infrastructure/Data", "Services/Catalog/Catalog.Infrastructure/Data"]
+COPY ["Services/Catalog/Catalog.Infrastructure/Data", "Services/Catalog/Catalog.Infrastructure/Data"]
 RUN dotnet restore "Services/Catalog/Catalog.Api/Catalog.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog/Catalog.Api"
@@ -23,5 +23,5 @@ RUN dotnet publish "Catalog.Api.csproj" -c Release -o /app/publish /p:UseAppHost
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-COPY --from=build Services/Catalog/Catalog.Infrastructure/Data /app/Data
+COPY --from=build /src/Services/Catalog/Catalog.Infrastructure/Data /app/Data
 ENTRYPOINT ["dotnet", "Catalog.Api.dll"]

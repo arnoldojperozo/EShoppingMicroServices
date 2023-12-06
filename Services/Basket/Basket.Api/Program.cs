@@ -28,7 +28,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddScoped<DiscountGrpcService>();
-builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o=> o.Address=new Uri(ConfigurationBinder["GrpcSettings:DiscountUrl"]);
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o => o.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")));
 builder.Services.AddHealthChecks().AddRedis(builder.Configuration["CacheSettings:ConnectionString"], "Redis Health",
     HealthStatus.Degraded);
 
@@ -48,7 +48,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
     endpoints.MapHealthChecks("/health", new HealthCheckOptions
     {
-        Predicate = _=>true,
+        Predicate = _ => true,
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
 });
