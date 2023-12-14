@@ -14,8 +14,8 @@ public static class ServiceRegistration
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CheckoutOrderCommand).GetTypeInfo().Assembly));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-        services.AddTransient(typeof(IPipelineBehavior<,>, typeof(ValidationBehaviour<,>));
-        services.AddTransient(typeof(IPipelineBehavior<,>, typeof(UnhandledExceptionBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehaviour<,>));
 
         return services;
     }
