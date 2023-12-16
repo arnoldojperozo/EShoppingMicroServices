@@ -13,7 +13,7 @@ public class OrderContext : DbContext
 
     public DbSet<Order> Orders { get; set; }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken= new CancellationToken())
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
         foreach (var item in ChangeTracker.Entries<EntityBase>())
         {

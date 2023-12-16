@@ -12,7 +12,7 @@ public class OrderContextSeed
             orderContext.Orders.AddRange(GetOrders());
 
             await orderContext.SaveChangesAsync();
-            logger.LogInformation($"Ordering Database Seeded: {typeof(OrderContext).Name}");
+            logger.LogInformation($"Ordering Database: {typeof(OrderContext).Name} Seeded");
         }
     }
 

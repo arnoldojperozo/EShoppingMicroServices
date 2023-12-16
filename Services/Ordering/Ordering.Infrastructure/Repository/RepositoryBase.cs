@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Ordering.Infrastructure.Repository;
 
-public abstract class RepositoryBase<T> : IAsyncRepository<T> where T : EntityBase
+public class RepositoryBase<T> : IAsyncRepository<T> where T : EntityBase
 {
     protected readonly OrderContext _orderContext;
 
