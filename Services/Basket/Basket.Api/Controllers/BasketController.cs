@@ -1,8 +1,11 @@
 ﻿using System.Net;
 using Basket.Application.Commands;
 using Basket.Application.GrpcService;
+using Basket.Application.Mappers;
 using Basket.Application.Queries;
 using Basket.Application.Responses;
+using Basket.Core.Entities;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +14,13 @@ namespace Basket.Api.Controllers;
 public class BasketController : ApiController
 {
     private readonly IMediator _mediator;
+    private readonly IPublishEndpoint _publishEndpoint;
     private readonly DiscountGrpcService _discountGrpcService;
 
-    public BasketController(IMediator mediator)
+    public BasketController(IMediator mediator, IPublishEndpoint publishEndpoint)
     {
         _mediator = mediator;
+        _publishEndpoint = publishEndpoint;
     }
 
     [HttpGet]
@@ -31,7 +36,7 @@ public class BasketController : ApiController
     }
 
     [HttpDelete("DeleteBasketByUserName")]
-    //[Route("[action]/{userName}", Name = "DeleteBasketByUserName")]
+    [Route("[action]/{userName}", Name = "DeleteBasketByUserName")]
     [ProducesResponseType((int)HttpStatusCode.OK)]
     public async Task<ActionResult<ShoppingCartResponse>> DeleteBasketByUserName(string userName)
     {
@@ -51,5 +56,30 @@ public class BasketController : ApiController
         return Ok(basket);
     }
 
+    [Route("[action]")]
+    [HttpPost]
+    [ProducesResponseType((int)HttpStatusCode.Accepted)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
+    {
+        //Get Existing basket with UserName
+        var query = new GetBasketByUserNameQuery(basketCheckout.UserName);
+        var basket=await _mediator.Send(query);
 
+        if(basket is null)
+            return BadRequest();
+
+        var eventMsg=BasketMapper.Mapper.Map<BasketCheckout>(basketCheckout);
+        eventMsg.TotalPrice=basket.TotalPrice;
+
+        //Publish Message in Queue
+        await _publishEndpoint.Publish<BasketCheckout>(eventMsg);
+
+        //Remove once published
+        var deleteQuery = new DeleteBasketByUserNameQuery(basketCheckout.UserName);
+
+        await _mediator.Send(deleteQuery);
+
+        return Accepted();
+    }
 }

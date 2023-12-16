@@ -5,6 +5,7 @@ using Basket.Core.Repositories.Interfaces;
 using Basket.Infrastructure.Repositories;
 using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -31,6 +32,32 @@ builder.Services.AddScoped<DiscountGrpcService>();
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(o => o.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl")));
 builder.Services.AddHealthChecks().AddRedis(builder.Configuration["CacheSettings:ConnectionString"], "Redis Health",
     HealthStatus.Degraded);
+
+builder.Services.AddMassTransit(config =>
+{
+    config.SetKebabCaseEndpointNameFormatter();
+    config.UsingRabbitMq((ct, cf) =>
+    {
+        //cf.Host(builder.Configuration["EventBusSettings:HostAddress"]);
+        cf.Host(new Uri(builder.Configuration["EventBusSettings:Host"]!), c =>
+        {
+            c.Username(builder.Configuration["EventBusSettings:UserName"]);
+            c.Username(builder.Configuration["EventBusSettings:Password"]);
+        });
+
+        cf.ConfigureEndpoints(ct);
+    });
+});
+
+//builder.Services.AddMassTransit(mt => mt.AddMassTransit(x => {
+//    x.UsingRabbitMq((cntxt, cfg) => {
+//        cfg.Host(builder.Configuration["EventBusSettings:Host"], "/", c => {
+//            c.Username(builder.Configuration["EventBusSettings:UserName"]);
+//            c.Password(builder.Configuration["EventBusSettings:Password"]);
+//        });
+//    });
+//}));
+
 
 var app = builder.Build();
 

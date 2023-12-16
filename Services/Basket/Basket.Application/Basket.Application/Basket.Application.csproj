@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Infrastructure\EventBus\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\..\Basket.Core\Baket.Core\Basket.Core.csproj" />
   </ItemGroup>
 
