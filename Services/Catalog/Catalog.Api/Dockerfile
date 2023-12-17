@@ -15,10 +15,10 @@ COPY ["Services/Catalog/Catalog.Infrastructure/Data", "Services/Catalog/Catalog.
 RUN dotnet restore "Services/Catalog/Catalog.Api/Catalog.Api.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog/Catalog.Api"
-RUN dotnet build "Catalog.Api.csproj" -c Release -o /app/build
+RUN dotnet build "Catalog.Api.csproj" -c Debug -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Catalog.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Catalog.Api.csproj" -c Debug -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

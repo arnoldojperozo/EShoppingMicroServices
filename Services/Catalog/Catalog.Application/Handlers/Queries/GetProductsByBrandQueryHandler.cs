@@ -2,10 +2,11 @@
 using Catalog.Application.Queries;
 using Catalog.Application.Responses;
 using Catalog.Core.Repository.Interfaces;
+using MediatR;
 
 namespace Catalog.Application.Handlers.Queries;
 
-public class GetProductsByBrandQueryHandler
+public class GetProductsByBrandQueryHandler : IRequestHandler<GetProductsByBrandQuery, IList<ProductResponse>>
 {
     private readonly IProductRepository _productRepository;
     

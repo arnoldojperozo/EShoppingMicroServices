@@ -17,15 +17,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseRouting();
 
-//app.UseEndpoints(endpoints =>
-//{
-//    IEndpointConventionBuilder endpointConventionBuilder = endpoints.MapGet("/", async context =>
-//    {
-//        await context.Response.WriteAsync("Hello Ocelot");
-//    });
-//});
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/", async context =>
+    {
+        await context.Response.WriteAsync("Hello Ocelot");
+    });
+});
+
+Console.WriteLine("Completed!");
 
 
-app.MapGet("/", () => Task.FromResult("Hello Ocelot"));
+//app.MapGet("/", () => Task.FromResult("Hello Ocelot"));
 
 await app.UseOcelot();
+
+app.Run();

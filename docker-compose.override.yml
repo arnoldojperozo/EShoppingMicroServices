@@ -116,7 +116,7 @@ services:
     ports:
       - "9003:80"
 
-  ocelotapigw:
+  ocelot.apigw:
     container_name: ocelotapigw
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
