@@ -31,15 +31,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket.Api", "Basket.Api", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket.Application", "Basket.Application", "{9E93027D-25AC-464C-B2F6-BFE4563D1B6B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Application", "Services\Basket\Basket.Application\Basket.Application\Basket.Application.csproj", "{7E760A72-276E-477C-B37E-374E7ECCA970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Application", "Services\Basket\Basket.Application\Basket.Application.csproj", "{7E760A72-276E-477C-B37E-374E7ECCA970}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Api", "Services\Basket\Basket.Api\Basket.Api.csproj", "{D069A96E-97C7-49C6-8DAA-061DA525462E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket.Core", "Basket.Core", "{2185BBCA-D846-45E7-A0B4-B534F7F38121}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Core", "Services\Basket\Basket.Core\Baket.Core\Basket.Core.csproj", "{68F474C9-05AE-4438-9FE9-6BBED0D6016F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Core", "Services\Basket\Basket.Core\Basket.Core.csproj", "{68F474C9-05AE-4438-9FE9-6BBED0D6016F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Infrastructure", "Services\Basket\Basket.Infrastructure\Basket.Infrastructure\Basket.Infrastructure.csproj", "{5A16C921-C1D2-46CE-AC62-99429043D788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Infrastructure", "Services\Basket\Basket.Infrastructure\Basket.Infrastructure.csproj", "{5A16C921-C1D2-46CE-AC62-99429043D788}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Basket.Infrastructure", "Basket.Infrastructure", "{76CD2714-401C-4CC5-909F-667B7FD6A38F}"
 EndProject

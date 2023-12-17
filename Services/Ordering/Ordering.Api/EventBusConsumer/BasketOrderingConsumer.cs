@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using EventBus.Messages.Events;
 using MassTransit;
-using MassTransit.Mediator;
+using MediatR;
 using Ordering.Application.Commands;
 
 namespace Ordering.Api.EventBusConsumer;
@@ -21,6 +21,9 @@ public class BasketOrderingConsumer : IConsumer<BasketCheckoutEvent>
 
     public async Task Consume(ConsumeContext<BasketCheckoutEvent> context)
     {
+        //using var scope = _logger.BeginScope("Consuming Basket Checkout Event for {correlationId}",
+        //    context.Message.CorrelationId);
+
         var command = _mapper.Map<CheckoutOrderCommand>(context.Message);
 
         await _mediator.Send(command);

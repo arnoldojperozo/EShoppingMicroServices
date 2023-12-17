@@ -13,30 +13,35 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddApiVersioning();
 builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddMediator();
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CheckoutOrderCommandHandler).GetTypeInfo().Assembly));
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 // Add services to the container.
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddScoped<BasketOrderingConsumer>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks().Services.AddDbContext<OrderContext>();
 
 builder.Services.AddMassTransit(config =>
 {
     config.SetKebabCaseEndpointNameFormatter();
+
     //Mark as Consumer
     config.AddConsumer<BasketOrderingConsumer>();
-
-    config.UsingRabbitMq((ct,cf) =>
+    
+    config.UsingRabbitMq((ct, cf) =>
     {
         cf.Host(new Uri(builder.Configuration["EventBusSettings:Host"]!), c =>
         {
             c.Username(builder.Configuration["EventBusSettings:UserName"]);
             c.Username(builder.Configuration["EventBusSettings:Password"]);
         });
-        cf.ReceiveEndpoint(EventBusConstant.BasketCheckoutQueue, c=> {
-            c.ConfigureConsumer<BasketOrderingConsumer>();
+        cf.ReceiveEndpoint(EventBusConstant.BasketCheckoutQueue, c =>
+        {
+            c.ConfigureConsumer<BasketOrderingConsumer>(ct);
         });
         cf.ConfigureEndpoints(ct);
     });
