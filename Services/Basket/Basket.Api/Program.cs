@@ -38,7 +38,6 @@ builder.Services.AddMassTransit(config =>
     config.SetKebabCaseEndpointNameFormatter();
     config.UsingRabbitMq((ct, cf) =>
     {
-        //cf.Host(builder.Configuration["EventBusSettings:HostAddress"]);
         cf.Host(new Uri(builder.Configuration["EventBusSettings:Host"]!), c =>
         {
             c.Username(builder.Configuration["EventBusSettings:UserName"]);
@@ -48,16 +47,6 @@ builder.Services.AddMassTransit(config =>
         cf.ConfigureEndpoints(ct);
     });
 });
-
-//builder.Services.AddMassTransit(mt => mt.AddMassTransit(x => {
-//    x.UsingRabbitMq((cntxt, cfg) => {
-//        cfg.Host(builder.Configuration["EventBusSettings:Host"], "/", c => {
-//            c.Username(builder.Configuration["EventBusSettings:UserName"]);
-//            c.Password(builder.Configuration["EventBusSettings:Password"]);
-//        });
-//    });
-//}));
-
 
 var app = builder.Build();
 

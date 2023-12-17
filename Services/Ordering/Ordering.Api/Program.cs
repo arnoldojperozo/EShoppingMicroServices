@@ -1,5 +1,8 @@
+using EventBus.Messages.Common;
 using HealthChecks.UI.Client;
+using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Ordering.Api.EventBusConsumer;
 using Ordering.Api.Extensions;
 using Ordering.Application.Extensions;
 using Ordering.Infrastructure.Data;
@@ -18,6 +21,26 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks().Services.AddDbContext<OrderContext>();
+
+builder.Services.AddMassTransit(config =>
+{
+    config.SetKebabCaseEndpointNameFormatter();
+    //Mark as Consumer
+    config.AddConsumer<BasketOrderingConsumer>();
+
+    config.UsingRabbitMq((ct,cf) =>
+    {
+        cf.Host(new Uri(builder.Configuration["EventBusSettings:Host"]!), c =>
+        {
+            c.Username(builder.Configuration["EventBusSettings:UserName"]);
+            c.Username(builder.Configuration["EventBusSettings:Password"]);
+        });
+        cf.ReceiveEndpoint(EventBusConstant.BasketCheckoutQueue, c=> {
+            c.ConfigureConsumer<BasketOrderingConsumer>();
+        });
+        cf.ConfigureEndpoints(ct);
+    });
+});
 
 var app = builder.Build();
 
