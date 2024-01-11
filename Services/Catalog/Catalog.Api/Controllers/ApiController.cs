@@ -5,6 +5,7 @@ namespace Catalog.Api.Controllers;
 
 [ApiVersion("1")]
 [Route("api/v{version:apiversion}/[controller]")]
+[ApiController]
 public class ApiController : ControllerBase
 {
     

@@ -5,7 +5,10 @@ using Catalog.Infrastructure.Data;
 using Catalog.Infrastructure.Data.Interfaces;
 using Catalog.Infrastructure.Repositories;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +32,24 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductBrandRepository, ProductRepository>();
 builder.Services.AddScoped<IProductTypeRepository, ProductRepository>();
 builder.Services.AddScoped<ICatalogContext, CatalogContext>();
+
+//Identity Server
+var userPolicy = new AuthorizationPolicyBuilder()
+    .RequireAuthenticatedUser()
+    .Build();
+
+builder.Services.AddControllers(config =>
+{
+    config.Filters.Add(new AuthorizeFilter(userPolicy));
+}); 
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt =>
+    {
+        opt.Authority = "https://localhost:9000";
+        opt.Audience = "Catalog";
+    });
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductCommandHandler).GetTypeInfo().Assembly));
 #endregion Dependency Injection Components
 
