@@ -15,9 +15,13 @@ public class BasketController : ApiController
 {
     private readonly IMediator _mediator;
     private readonly IPublishEndpoint _publishEndpoint;
+#pragma warning disable CS0169 // The field 'BasketController._discountGrpcService' is never used
     private readonly DiscountGrpcService _discountGrpcService;
+#pragma warning restore CS0169 // The field 'BasketController._discountGrpcService' is never used
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public BasketController(IMediator mediator, IPublishEndpoint publishEndpoint)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         _mediator = mediator;
         _publishEndpoint = publishEndpoint;
@@ -63,7 +67,9 @@ public class BasketController : ApiController
     public async Task<IActionResult> Checkout([FromBody] BasketCheckout basketCheckout)
     {
         //Get Existing basket with UserName
+#pragma warning disable CS8604 // Possible null reference argument.
         var query = new GetBasketByUserNameQuery(basketCheckout.UserName);
+#pragma warning restore CS8604 // Possible null reference argument.
         var basket=await _mediator.Send(query);
 
         if(basket is null)

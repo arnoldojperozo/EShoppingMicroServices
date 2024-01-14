@@ -19,7 +19,8 @@ namespace Identity
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("CatalogApiScope");
+                new ApiScope("CatalogApiScope"),
+                new ApiScope("BasketApiScope")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -29,6 +30,10 @@ namespace Identity
                 new ApiResource("Catalog", "Catalog.API")
                 {
                     Scopes = { "CatalogApiScope" }
+                },
+                new ApiResource("Basket", "Basket.API")
+                {
+                    Scopes= { "BasketApiScope" }
                 }
             };
 
@@ -43,6 +48,14 @@ namespace Identity
                     ClientSecrets = { new Secret("6bc16839-bb3e-49ce-ad33-ac11714e5e68".Sha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     AllowedScopes = { "CatalogApiScope" }
+                },
+                new Client
+                {
+                    ClientName = "Basket API Client",
+                    ClientId = "BasketApiClient",
+                    ClientSecrets = { new Secret("6bc16839-cccc-dddd-ad33-ac11714e5e68".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "BasketApiScope" }
                 }
             };
     }

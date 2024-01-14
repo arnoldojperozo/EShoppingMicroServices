@@ -52,7 +52,9 @@ var app = builder.Build();
 app.MigrateDatabase<OrderContext>((context, services) =>
 {
     var logger = services.GetService<ILogger<OrderContextSeed>>();
+#pragma warning disable CS8604 // Possible null reference argument.
     OrderContextSeed.SeedAsync(context, logger).Wait();
+#pragma warning restore CS8604 // Possible null reference argument.
 });
 
 // Configure the HTTP request pipeline.

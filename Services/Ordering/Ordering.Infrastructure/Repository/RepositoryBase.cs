@@ -41,7 +41,9 @@ public class RepositoryBase<T> : IAsyncRepository<T> where T : EntityBase
 
     public async Task<T> GetByIdAsync(int id)
     {
+#pragma warning disable CS8603 // Possible null reference return.
         return await _orderContext.Set<T>().FindAsync(id);
+#pragma warning restore CS8603 // Possible null reference return.
     }
 
     public async Task UpdateAsync(T entity)

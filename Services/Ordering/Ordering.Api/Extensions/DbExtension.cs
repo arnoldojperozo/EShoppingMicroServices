@@ -26,7 +26,11 @@ public static class DbExtension
                         {
                             logger.LogError("Retrying because of {exception} {retry}", exception, span);
                         });
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+#pragma warning disable CS8631 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match constraint type.
                 retry.Execute(() => CallSeeder(seeder, context, services));
+#pragma warning restore CS8631 // The type cannot be used as type parameter in the generic type or method. Nullability of type argument doesn't match constraint type.
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                 logger.LogInformation($"Migration Completed: {typeof(TContext).Name}");
             }
             catch (SqlException e)
